@@ -27,3 +27,5 @@ coverage
 Makefile
 !doc/_sphinx/Makefile
 .bak
+packages/flame_svg/example/macos
+packages/flame_svg/example/windows

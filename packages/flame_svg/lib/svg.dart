@@ -10,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class Svg {
   /// The [DrawableRoot] that this [Svg] represents.
   final DrawableRoot svgRoot;
+  final double _pixelRatio = window.devicePixelRatio;
 
   /// Creates an [Svg] with the received [svgRoot].
   Svg(this.svgRoot);
@@ -34,7 +35,10 @@ class Svg {
     final image = _getImage(_size);
 
     if (image != null) {
+      canvas.save();
+      canvas.scale(1 / _pixelRatio);
       canvas.drawImage(image, Offset.zero, _paint);
+      canvas.restore();
     } else {
       _render(canvas, _size);
     }
@@ -54,24 +58,29 @@ class Svg {
     final image = _imageCache.getValue(size);
 
     if (image == null && !_lock.contains(size)) {
-      _lock.add(size);
-      final recorder = PictureRecorder();
-
-      final canvas = Canvas(recorder);
-      _render(canvas, size);
-      final _picture = recorder.endRecording();
-
-      _picture.toImage(size.width.toInt(), size.height.toInt()).then((image) {
-        _imageCache.setValue(size, image);
-        _lock.remove(size);
-        _picture.dispose();
-      });
+      populateImageCache(size);
     }
 
     return image;
   }
 
+  Future<void> populateImageCache(Size size) async {
+    _lock.add(size);
+    final recorder = PictureRecorder();
+    final canvas = Canvas(recorder);
+    _render(canvas, size);
+    final _picture = recorder.endRecording();
+    final image = await _picture.toImage(
+      (size.width * _pixelRatio).ceil(),
+      (size.height * _pixelRatio).ceil(),
+    );
+    _imageCache.setValue(size, image);
+    _lock.remove(size);
+    _picture.dispose();
+  }
+
   void _render(Canvas canvas, Size size) {
+    canvas.scale(_pixelRatio);
     svgRoot.scaleCanvasToViewBox(canvas, size);
     svgRoot.draw(canvas, svgRoot.viewport.viewBoxRect);
   }
