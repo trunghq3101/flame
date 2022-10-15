@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/src/rendering/decorator.dart';
+import 'package:flutter/rendering.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 /// [Shadow3DDecorator] casts a realistic-looking shadow from the component
@@ -139,15 +140,18 @@ class Shadow3DDecorator extends Decorator {
   }
 
   @override
-  void apply(void Function(Canvas) draw, Canvas canvas) {
+  void apply(
+    void Function(PaintingContext context) draw,
+    PaintingContext context,
+  ) {
     _transformMatrix ??= _makeTransform();
     _paint ??= _makePaint();
 
-    canvas.saveLayer(null, _paint!);
-    canvas.translate(base.x + _shift, base.y);
-    canvas.transform(_transformMatrix!.storage);
-    draw(canvas);
-    canvas.restore();
-    draw(canvas);
+    context.canvas.saveLayer(null, _paint!);
+    context.canvas.translate(base.x + _shift, base.y);
+    context.canvas.transform(_transformMatrix!.storage);
+    draw(context);
+    context.canvas.restore();
+    draw(context);
   }
 }

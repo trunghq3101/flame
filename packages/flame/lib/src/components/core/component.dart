@@ -10,7 +10,7 @@ import 'package:flame/src/game/flame_game.dart';
 import 'package:flame/src/game/game.dart';
 import 'package:flame/src/gestures/events.dart';
 import 'package:flame/src/text/text_paint.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:meta/meta.dart';
 import 'package:vector_math/vector_math_64.dart';
 
@@ -464,13 +464,13 @@ class Component {
 
   void render(Canvas canvas) {}
 
-  void renderTree() {
-    render(findGame()!.paintingContext!.canvas);
-    _children?.forEach((c) => c.renderTree());
+  void renderTree(PaintingContext paintingContext) {
+    render(paintingContext.canvas);
+    _children?.forEach((c) => c.renderTree(paintingContext));
 
     // Any debug rendering should be rendered on top of everything
     if (debugMode) {
-      renderDebugMode(findGame()!.paintingContext!.canvas);
+      renderDebugMode(paintingContext.canvas);
     }
   }
 

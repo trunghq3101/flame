@@ -1,7 +1,7 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/src/rendering/decorator.dart';
+import 'package:flutter/rendering.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 /// [Rotate3DDecorator] treats the underlying component as if it was a flat
@@ -53,17 +53,20 @@ class Rotate3DDecorator extends Decorator {
   }
 
   @override
-  void apply(void Function(Canvas) draw, Canvas canvas) {
-    canvas.save();
-    canvas.translate(center.x, center.y);
+  void apply(
+    void Function(PaintingContext context) draw,
+    PaintingContext context,
+  ) {
+    context.canvas.save();
+    context.canvas.translate(center.x, center.y);
     final matrix = Matrix4.identity()
       ..setEntry(3, 2, perspective)
       ..rotateX(angleX)
       ..rotateY(angleY)
       ..rotateZ(angleZ)
       ..translate(-center.x, -center.y);
-    canvas.transform(matrix.storage);
-    draw(canvas);
-    canvas.restore();
+    context.canvas.transform(matrix.storage);
+    draw(context);
+    context.canvas.restore();
   }
 }

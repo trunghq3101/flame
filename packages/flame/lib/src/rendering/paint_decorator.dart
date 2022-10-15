@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/src/rendering/decorator.dart';
+import 'package:flutter/rendering.dart';
 
 /// [PaintDecorator] applies a paint filter to a group of drawing operations.
 ///
@@ -33,9 +34,12 @@ class PaintDecorator extends Decorator {
   }
 
   @override
-  void apply(void Function() draw) {
-    canvas.saveLayer(null, _paint);
-    draw();
-    canvas.restore();
+  void apply(
+    void Function(PaintingContext context) draw,
+    PaintingContext context,
+  ) {
+    context.canvas.saveLayer(null, _paint);
+    draw(context);
+    context.canvas.restore();
   }
 }

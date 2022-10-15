@@ -4,6 +4,7 @@ import 'package:flame/src/components/position_component.dart';
 import 'package:flame/src/components/router_component.dart';
 import 'package:flame/src/effects/effect.dart';
 import 'package:flame/src/rendering/decorator.dart';
+import 'package:flutter/rendering.dart';
 import 'package:meta/meta.dart';
 import 'package:vector_math/vector_math_64.dart';
 
@@ -134,9 +135,9 @@ class Route extends PositionComponent with ParentIsA<RouterComponent> {
   void didPop(Route previousRoute) => onPop(previousRoute);
 
   @override
-  void renderTree() {
+  void renderTree(PaintingContext paintingContext) {
     if (isRendered) {
-      _renderEffect.applyChain(super.renderTree);
+      _renderEffect.applyChain(super.renderTree, paintingContext);
     }
   }
 

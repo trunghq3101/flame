@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:flame/components.dart';
 import 'package:flame/src/game/camera/camera.dart';
+import 'package:flutter/rendering.dart';
 import 'package:meta/meta.dart';
 
 /// This class encapsulates FlameGame's rendering functionality. It will be
@@ -20,33 +19,33 @@ class CameraWrapper {
     camera.update(dt);
   }
 
-  void render(Canvas canvas) {
+  void render(PaintingContext paintingContext) {
     PositionType? _previousType;
-    canvas.save();
+    paintingContext.canvas.save();
     world.forEach((component) {
       final sameType = component.positionType == _previousType;
       if (!sameType) {
         if (_previousType != null && _previousType != PositionType.widget) {
-          canvas.restore();
-          canvas.save();
+          paintingContext.canvas.restore();
+          paintingContext.canvas.save();
         }
         switch (component.positionType) {
           case PositionType.game:
-            camera.viewport.apply(canvas);
-            camera.apply(canvas);
+            camera.viewport.apply(paintingContext.canvas);
+            camera.apply(paintingContext.canvas);
             break;
           case PositionType.viewport:
-            camera.viewport.apply(canvas);
+            camera.viewport.apply(paintingContext.canvas);
             break;
           case PositionType.widget:
         }
       }
-      component.renderTree();
+      component.renderTree(paintingContext);
       _previousType = component.positionType;
     });
 
     if (_previousType != PositionType.widget) {
-      canvas.restore();
+      paintingContext.canvas.restore();
     }
   }
 }

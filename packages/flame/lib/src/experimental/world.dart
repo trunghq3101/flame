@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:flame/src/components/core/component.dart';
 import 'package:flame/src/components/mixins/coordinate_transform.dart';
 import 'package:flame/src/experimental/camera_component.dart';
+import 'package:flutter/rendering.dart';
 import 'package:meta/meta.dart';
 import 'package:vector_math/vector_math_64.dart';
 
@@ -13,13 +12,13 @@ import 'package:vector_math/vector_math_64.dart';
 /// updates proceed through the world tree normally.
 class World extends Component implements CoordinateTransform {
   @override
-  void renderTree() {}
+  void renderTree(PaintingContext paintingContext) {}
 
   /// Internal rendering method invoked by the [CameraComponent].
   @internal
   void renderFromCamera(Canvas canvas) {
     assert(CameraComponent.currentCamera != null);
-    super.renderTree();
+    // super.renderTree();
   }
 
   @override

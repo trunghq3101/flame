@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:flame/src/components/position_component.dart';
 import 'package:flame/src/game/transform2d.dart';
 import 'package:flame/src/rendering/decorator.dart';
+import 'package:flutter/rendering.dart';
 
 /// [Transform2DDecorator] applies a translation/rotation/scale transform to
 /// the canvas.
@@ -15,10 +14,13 @@ class Transform2DDecorator extends Decorator {
   final Transform2D transform2d;
 
   @override
-  void apply(void Function(Canvas) draw, Canvas canvas) {
-    canvas.save();
-    canvas.transform(transform2d.transformMatrix.storage);
-    draw(canvas);
-    canvas.restore();
+  void apply(
+    void Function(PaintingContext context) draw,
+    PaintingContext context,
+  ) {
+    context.canvas.save();
+    context.canvas.transform(transform2d.transformMatrix.storage);
+    draw(context);
+    context.canvas.restore();
   }
 }

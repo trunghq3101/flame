@@ -2,6 +2,7 @@ import 'package:flame/src/rendering/paint_decorator.dart';
 import 'package:flame/src/rendering/rotate3d_decorator.dart';
 import 'package:flame/src/rendering/shadow3d_decorator.dart';
 import 'package:flame/src/rendering/transform2d_decorator.dart';
+import 'package:flutter/rendering.dart';
 import 'package:meta/meta.dart';
 
 /// [Decorator] is an abstract class that encapsulates a particular visual
@@ -32,9 +33,13 @@ class Decorator {
   /// Applies this and all subsequent decorators if any.
   ///
   /// This method is the main method through which the decorator is applied.
-  void applyChain(void Function() draw) {
+  void applyChain(
+    void Function(PaintingContext context) draw,
+    PaintingContext context,
+  ) {
     apply(
-      _next == null ? draw : () => _next!.applyChain(draw),
+      _next == null ? draw : (context) => _next!.applyChain(draw, context),
+      context,
     );
   }
 
@@ -46,8 +51,11 @@ class Decorator {
   /// This method must be implemented by the subclasses, but it is not available
   /// to external users: use [applyChain] instead.
   @protected
-  void apply(void Function() draw) {
-    draw();
+  void apply(
+    void Function(PaintingContext context) draw,
+    PaintingContext context,
+  ) {
+    draw(context);
   }
 
   //#region Decorator chain functionality

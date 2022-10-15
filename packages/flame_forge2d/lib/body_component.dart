@@ -5,6 +5,7 @@ import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
 import 'package:forge2d/forge2d.dart' hide Timer, Vector2;
 
 /// Since a pure BodyComponent doesn't have anything drawn on top of it,
@@ -55,7 +56,7 @@ abstract class BodyComponent<T extends Forge2DGame> extends Component
 
   @mustCallSuper
   @override
-  void renderTree(Canvas canvas) {
+  void renderTree(PaintingContext paintingContext) {
     if (_transform.m14 != body.position.x ||
         _transform.m24 != body.position.y ||
         _lastAngle != angle) {
@@ -64,10 +65,10 @@ abstract class BodyComponent<T extends Forge2DGame> extends Component
       _transform.rotateZ(angle);
       _lastAngle = angle;
     }
-    canvas.save();
-    canvas.transform(_transform.storage);
-    super.renderTree(canvas);
-    canvas.restore();
+    paintingContext.canvas.save();
+    paintingContext.canvas.transform(_transform.storage);
+    super.renderTree(paintingContext);
+    paintingContext.canvas.restore();
   }
 
   @override

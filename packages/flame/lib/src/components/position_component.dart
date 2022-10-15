@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'dart:ui' hide Offset;
 
 import 'package:collection/collection.dart';
 import 'package:flame/src/anchor.dart';
@@ -12,6 +11,7 @@ import 'package:flame/src/game/notifying_vector2.dart';
 import 'package:flame/src/game/transform2d.dart';
 import 'package:flame/src/rendering/decorator.dart';
 import 'package:flame/src/rendering/transform2d_decorator.dart';
+import 'package:flutter/rendering.dart';
 
 /// A [Component] implementation that represents an object that can be
 /// freely moved around the screen, rotated, and scaled.
@@ -445,9 +445,10 @@ class PositionComponent extends Component
   }
 
   @override
-  void renderTree() {
+  void renderTree(PaintingContext paintingContext) {
     decorator.applyChain(
       super.renderTree,
+      paintingContext,
     );
   }
 

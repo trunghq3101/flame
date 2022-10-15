@@ -1,11 +1,10 @@
-import 'dart:ui';
-
 import 'package:flame/src/components/core/component.dart';
 import 'package:flame/src/extensions/vector2.dart';
 import 'package:flame/src/game/camera/camera.dart';
 import 'package:flame/src/game/camera/camera_wrapper.dart';
 import 'package:flame/src/game/game.dart';
 import 'package:flame/src/game/projector.dart';
+import 'package:flutter/rendering.dart';
 import 'package:meta/meta.dart';
 
 /// This is a more complete and opinionated implementation of [Game].
@@ -53,14 +52,14 @@ class FlameGame extends Component with Game {
   @mustCallSuper
   void render(Canvas canvas) {
     if (parent == null) {
-      renderTree();
+      renderTree(paintingContext!);
     }
   }
 
   @override
-  void renderTree() {
+  void renderTree(PaintingContext paintingContext) {
     // Don't call super.renderTree, since the tree is rendered by the camera
-    _cameraWrapper.render(paintingContext!.canvas);
+    _cameraWrapper.render(paintingContext);
   }
 
   @override

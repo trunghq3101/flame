@@ -1,5 +1,6 @@
 import 'package:flame/src/components/core/component.dart';
 import 'package:flame/src/rendering/decorator.dart';
+import 'package:flutter/rendering.dart';
 
 /// [HasDecorator] mixin adds a nullable [decorator] field to a Component. If
 /// this field is set, it will apply the visual effect encapsulated in this
@@ -15,11 +16,11 @@ mixin HasDecorator on Component {
   Decorator? decorator;
 
   @override
-  void renderTree() {
+  void renderTree(PaintingContext paintingContext) {
     if (decorator == null) {
-      super.renderTree();
+      super.renderTree(paintingContext);
     } else {
-      decorator!.applyChain(super.renderTree);
+      decorator!.applyChain(super.renderTree, paintingContext);
     }
   }
 }

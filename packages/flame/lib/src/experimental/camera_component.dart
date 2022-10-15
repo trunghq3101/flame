@@ -11,6 +11,7 @@ import 'package:flame/src/experimental/max_viewport.dart';
 import 'package:flame/src/experimental/viewfinder.dart';
 import 'package:flame/src/experimental/viewport.dart';
 import 'package:flame/src/experimental/world.dart';
+import 'package:flutter/rendering.dart';
 import 'package:meta/meta.dart';
 import 'package:vector_math/vector_math_64.dart';
 
@@ -82,7 +83,7 @@ class CameraComponent extends Component {
   /// If the world is not mounted yet, only the viewport HUD elements will be
   /// rendered.
   @override
-  void renderTree() {
+  void renderTree(PaintingContext paintingContext) {
     // canvas.save();
     // canvas.translate(
     //   viewport.position.x - viewport.anchor.x * viewport.size.x,
