@@ -33,9 +33,9 @@ class PaintDecorator extends Decorator {
   }
 
   @override
-  void apply(void Function(Canvas) draw, Canvas canvas) {
+  void apply(void Function() draw) {
     canvas.saveLayer(null, _paint);
-    draw(canvas);
+    draw();
     canvas.restore();
   }
 }

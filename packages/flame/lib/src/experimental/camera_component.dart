@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flame/src/components/core/component.dart';
 import 'package:flame/src/components/position_component.dart';
 import 'package:flame/src/effects/controllers/effect_controller.dart';
@@ -84,29 +82,29 @@ class CameraComponent extends Component {
   /// If the world is not mounted yet, only the viewport HUD elements will be
   /// rendered.
   @override
-  void renderTree(Canvas canvas) {
-    canvas.save();
-    canvas.translate(
-      viewport.position.x - viewport.anchor.x * viewport.size.x,
-      viewport.position.y - viewport.anchor.y * viewport.size.y,
-    );
-    // Render the world through the viewport
-    if (world.isMounted && currentCameras.length < maxCamerasDepth) {
-      canvas.save();
-      viewport.clip(canvas);
-      try {
-        currentCameras.add(this);
-        canvas.transform(viewfinder.transform.transformMatrix.storage);
-        world.renderFromCamera(canvas);
-        viewfinder.renderTree(canvas);
-      } finally {
-        currentCameras.removeLast();
-      }
-      canvas.restore();
-    }
-    // Now render the HUD elements
-    viewport.renderTree(canvas);
-    canvas.restore();
+  void renderTree() {
+    // canvas.save();
+    // canvas.translate(
+    //   viewport.position.x - viewport.anchor.x * viewport.size.x,
+    //   viewport.position.y - viewport.anchor.y * viewport.size.y,
+    // );
+    // // Render the world through the viewport
+    // if (world.isMounted && currentCameras.length < maxCamerasDepth) {
+    //   canvas.save();
+    //   viewport.clip(canvas);
+    //   try {
+    //     currentCameras.add(this);
+    //     canvas.transform(viewfinder.transform.transformMatrix.storage);
+    //     world.renderFromCamera(canvas);
+    //     viewfinder.renderTree(canvas);
+    //   } finally {
+    //     currentCameras.removeLast();
+    //   }
+    //   canvas.restore();
+    // }
+    // // Now render the HUD elements
+    // viewport.renderTree(canvas);
+    // canvas.restore();
   }
 
   @override

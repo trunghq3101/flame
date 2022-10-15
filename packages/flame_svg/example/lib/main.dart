@@ -12,7 +12,7 @@ class MyGame extends FlameGame {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    svgInstance.renderPosition(canvas, Vector2(100, 200), Vector2.all(300));
+    svgInstance.render(paintingContext!, Vector2(100, 200));
   }
 
   @override

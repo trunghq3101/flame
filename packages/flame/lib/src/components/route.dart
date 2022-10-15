@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flame/src/components/core/component.dart';
 import 'package:flame/src/components/mixins/parent_is_a.dart';
 import 'package:flame/src/components/position_component.dart';
@@ -136,9 +134,9 @@ class Route extends PositionComponent with ParentIsA<RouterComponent> {
   void didPop(Route previousRoute) => onPop(previousRoute);
 
   @override
-  void renderTree(Canvas canvas) {
+  void renderTree() {
     if (isRendered) {
-      _renderEffect.applyChain(super.renderTree, canvas);
+      _renderEffect.applyChain(super.renderTree);
     }
   }
 

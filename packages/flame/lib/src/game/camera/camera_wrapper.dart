@@ -41,7 +41,7 @@ class CameraWrapper {
           case PositionType.widget:
         }
       }
-      component.renderTree(canvas);
+      component.renderTree();
       _previousType = component.positionType;
     });
 

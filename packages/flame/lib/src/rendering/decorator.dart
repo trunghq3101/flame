@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flame/src/rendering/paint_decorator.dart';
 import 'package:flame/src/rendering/rotate3d_decorator.dart';
 import 'package:flame/src/rendering/shadow3d_decorator.dart';
@@ -34,12 +32,9 @@ class Decorator {
   /// Applies this and all subsequent decorators if any.
   ///
   /// This method is the main method through which the decorator is applied.
-  void applyChain(void Function(Canvas) draw, Canvas canvas) {
+  void applyChain(void Function() draw) {
     apply(
-      _next == null
-          ? draw
-          : (nextCanvas) => _next!.applyChain(draw, nextCanvas),
-      canvas,
+      _next == null ? draw : () => _next!.applyChain(draw),
     );
   }
 
@@ -51,8 +46,8 @@ class Decorator {
   /// This method must be implemented by the subclasses, but it is not available
   /// to external users: use [applyChain] instead.
   @protected
-  void apply(void Function(Canvas) draw, Canvas canvas) {
-    draw(canvas);
+  void apply(void Function() draw) {
+    draw();
   }
 
   //#region Decorator chain functionality

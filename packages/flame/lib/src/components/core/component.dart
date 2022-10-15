@@ -464,13 +464,13 @@ class Component {
 
   void render(Canvas canvas) {}
 
-  void renderTree(Canvas canvas) {
-    render(canvas);
-    _children?.forEach((c) => c.renderTree(canvas));
+  void renderTree() {
+    render(findGame()!.paintingContext!.canvas);
+    _children?.forEach((c) => c.renderTree());
 
     // Any debug rendering should be rendered on top of everything
     if (debugMode) {
-      renderDebugMode(canvas);
+      renderDebugMode(findGame()!.paintingContext!.canvas);
     }
   }
 

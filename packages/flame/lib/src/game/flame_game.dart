@@ -53,14 +53,14 @@ class FlameGame extends Component with Game {
   @mustCallSuper
   void render(Canvas canvas) {
     if (parent == null) {
-      renderTree(canvas);
+      renderTree();
     }
   }
 
   @override
-  void renderTree(Canvas canvas) {
+  void renderTree() {
     // Don't call super.renderTree, since the tree is rendered by the camera
-    _cameraWrapper.render(canvas);
+    _cameraWrapper.render(paintingContext!.canvas);
   }
 
   @override

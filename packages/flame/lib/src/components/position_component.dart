@@ -445,8 +445,10 @@ class PositionComponent extends Component
   }
 
   @override
-  void renderTree(Canvas canvas) {
-    decorator.applyChain(super.renderTree, canvas);
+  void renderTree() {
+    decorator.applyChain(
+      super.renderTree,
+    );
   }
 
   /// Returns the bounding rectangle for this component.

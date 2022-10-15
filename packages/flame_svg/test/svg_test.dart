@@ -39,5 +39,13 @@ void main() {
       ),
     );
     await screenMatchesGolden(tester, 'smooth_rendered_image');
+    await tester.pumpWidgetBuilder(
+      SvgPicture.string(
+        File('test/assets/hand.svg').readAsStringSync(),
+        width: 500,
+        height: 500,
+      ),
+    );
+    await screenMatchesGolden(tester, 'flutter_svg_smooth_rendered_image');
   });
 }

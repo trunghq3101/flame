@@ -4,7 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_svg/svg.dart';
 
 /// Wraps [Svg] in a Flame component.
-class SvgComponent extends PositionComponent {
+class SvgComponent extends PositionComponent with HasGameRef {
   /// The wrapped instance of [Svg].
   Svg? _svg;
 
@@ -30,7 +30,7 @@ class SvgComponent extends PositionComponent {
 
   @override
   void render(Canvas canvas) {
-    _svg?.render(canvas, size);
+    _svg?.render(gameRef.paintingContext!, size);
   }
 
   @override

@@ -27,6 +27,8 @@ abstract class Game {
   /// instance if needed.
   AssetsCache assets = Flame.assets;
 
+  PaintingContext? paintingContext;
+
   /// This should update the state of the game.
   void update(double dt);
 

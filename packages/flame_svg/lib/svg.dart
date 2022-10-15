@@ -4,6 +4,7 @@ import 'package:flame/cache.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 /// A [Svg] to be rendered on a Flame [Game].
@@ -30,18 +31,10 @@ class Svg {
   }
 
   /// Renders the svg on the [canvas] using the dimensions provided by [size].
-  void render(Canvas canvas, Vector2 size) {
+  void render(PaintingContext context, Vector2 size) {
     final _size = size.toSize();
-    final image = _getImage(_size);
-
-    if (image != null) {
-      canvas.save();
-      canvas.scale(1 / _pixelRatio);
-      canvas.drawImage(image, Offset.zero, _paint);
-      canvas.restore();
-    } else {
-      _render(canvas, _size);
-    }
+    final pic = svgRoot.toPicture(size: _size);
+    context.addLayer(PictureLayer(_size.toRect())..picture = pic);
   }
 
   /// Renders the svg on the [canvas] on the given [position] using the
@@ -50,9 +43,7 @@ class Svg {
     Canvas canvas,
     Vector2 position,
     Vector2 size,
-  ) {
-    canvas.renderAt(position, (c) => render(c, size));
-  }
+  ) {}
 
   Image? _getImage(Size size) {
     final image = _imageCache.getValue(size);

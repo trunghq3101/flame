@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flame/src/components/core/component.dart';
 import 'package:flame/src/rendering/decorator.dart';
 
@@ -17,11 +15,11 @@ mixin HasDecorator on Component {
   Decorator? decorator;
 
   @override
-  void renderTree(Canvas canvas) {
+  void renderTree() {
     if (decorator == null) {
-      super.renderTree(canvas);
+      super.renderTree();
     } else {
-      decorator!.applyChain(super.renderTree, canvas);
+      decorator!.applyChain(super.renderTree);
     }
   }
 }
